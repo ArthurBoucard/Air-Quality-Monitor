@@ -1,7 +1,9 @@
 #include <Wire.h>
+#include <WiFi.h>
 #include <SPI.h>
 #include <Adafruit_Sensor.h>
 #include "Adafruit_BME680.h"
+#include "secrets.h"
 
 #define BME_SCK 18
 #define BME_MISO 19
@@ -10,9 +12,10 @@
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
+#define CONNECTION_TIMEOUT 10
+
 Adafruit_BME680 bme(BME_CS, BME_MOSI, BME_MISO,  BME_SCK);
 
-// Define the IAQ weight constants
 const float HumidityWeight = 0.4;
 const float VOCWeight = 0.3;
 const float TemperatureWeight = 0.2;
@@ -21,7 +24,21 @@ const float PressureWeight = 0.1;
 void setup() {
   Serial.begin(9600);
   while (!Serial);
-  Serial.println("BME680 test");
+
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  Serial.println("\nConnecting to WiFi");
+  int timeout_counter = 0;
+
+  while(WiFi.status() != WL_CONNECTED){
+    Serial.print(".");
+    delay(200);
+    timeout_counter++;
+    if(timeout_counter >= CONNECTION_TIMEOUT*5){
+    ESP.restart();
+    }
+  }
+
+  Serial.println("\nConnected to the WiFi network");
 
   if (!bme.begin()) {
     Serial.println("Could not find a valid BME680 sensor, check wiring!");
