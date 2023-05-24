@@ -4,7 +4,7 @@ USE air_quality_monitor;
 
 CREATE TABLE measurements (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  timestamp TIMESTAMP,
+  time TIMESTAMP,
   temperature FLOAT,
   pressure FLOAT,
   gas FLOAT,
