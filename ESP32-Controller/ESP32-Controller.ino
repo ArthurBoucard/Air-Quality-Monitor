@@ -16,6 +16,7 @@
 
 Adafruit_BME680 bme(BME_CS, BME_MOSI, BME_MISO,  BME_SCK);
 
+// Weight attribution
 const float HumidityWeight = 0.4;
 const float VOCWeight = 0.3;
 const float TemperatureWeight = 0.2;
@@ -25,6 +26,7 @@ void setup() {
   Serial.begin(9600);
   while (!Serial);
 
+  // Connect to WiFi
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   Serial.println("\nConnecting to WiFi");
   int timeout_counter = 0;
@@ -34,12 +36,13 @@ void setup() {
     delay(200);
     timeout_counter++;
     if(timeout_counter >= CONNECTION_TIMEOUT*5){
-    ESP.restart();
+      ESP.restart();
     }
   }
 
   Serial.println("\nConnected to the WiFi network");
 
+  // Check sensors
   if (!bme.begin()) {
     Serial.println("Could not find a valid BME680 sensor, check wiring!");
     while (1);
