@@ -1,4 +1,4 @@
-Certainly! Since the `mysql-server` package has been replaced with `mariadb-server` in some distributions, you can follow these updated steps to install and run MariaDB on your Raspberry Pi:
+Steps to install and run MariaDB on your Raspberry Pi:
 
 1. Update the system: Start by updating your Raspberry Pi's system packages to ensure you have the latest software.
 
