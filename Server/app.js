@@ -1,37 +1,30 @@
-const mysql = require('mysql');
+const express = require('express');
+const os = require('os');
+const measurementsRoutes = require('./routes/measurementsRoutes');
 
-// Create a connection
-const connection = mysql.createConnection({
-    host: '192.168.1.111',
-    user: 'admin',
-    password: 'admin',
-    database: 'air_quality_monitor',
-});
+const app = express();
 
-// Connect to MariaDB
-connection.connect((error) => {
-    if (error) {
-        console.error('Error connecting to MariaDB:', error);
-        return;
+// Middleware to parse request body
+app.use(express.json());
+
+// Define your routes
+app.use('/measurements', measurementsRoutes);
+
+// Determine the IP address dynamically
+const interfaces = os.networkInterfaces();
+const addresses = [];
+for (const key in interfaces) {
+    for (const interface of interfaces[key]) {
+        if (interface.family === 'IPv4' && !interface.internal) {
+            addresses.push(interface.address);
+        }
     }
-    console.log('Connected to MariaDB!');
+}
 
-    // Perform database operations
-    // Example: Execute a SQL query
-    connection.query('SELECT * FROM measurements', (error, results) => {
-    if (error) {
-      console.error('Error executing query:', error);
-      return;
-    }
-    console.log('Query results:', results);
-
-    // Close the connection when finished with operations
-    connection.end((error) => {
-      if (error) {
-        console.error('Error closing connection:', error);
-        return;
-      }
-      console.log('Connection closed.');
+// Start the server
+const port = 3000; // Set your desired port number
+app.listen(port, () => {
+    addresses.forEach((address) => {
+        console.log(`Server is running on http://${address}:${port}`);
     });
-  });
 });
