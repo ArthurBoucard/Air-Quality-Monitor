@@ -156,10 +156,10 @@ void loop() {
   if (temperature != -1 || pressure != -1 || humidity != -1 || gas != -1 || co2 != -1) {
 
     // Calculate normalized values
-    float normalizedHumidity = humidity / 100.0;
-    float normalizedVOC = (gas * 0.001 - 0) / (500 - 0);
-    float normalizedTemperature = (temperature - (-10)) / (40 - 0);
-    float normalizedPressure = (pressure / 100.0 - 900) / (1100 - 900);
+    float normalizedHumidity = (humidity - 0) / (100 - 0);
+    float normalizedVOC = (gas - 0) / (500 - 0);
+    float normalizedTemperature = (temperature - 0) / (50 - 0);
+    float normalizedPressure = (pressure - 900) / (1100 - 900);
     float normalizedCO2 = (co2 - 400) / (5000 - 400);
 
     // Calculate IAQ score
