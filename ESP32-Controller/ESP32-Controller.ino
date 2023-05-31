@@ -34,7 +34,7 @@ const float CO2Weight = 0.2;
 const float PressureWeight = 0.1;
 
 // Server info
-const char* serverUrl = "http://192.168.1.104:3000/measurements/create";
+String serverUrl = "http://" + String(SERVER_IP) + "/measurements/create";
 
 void interrupt_change()
 {
