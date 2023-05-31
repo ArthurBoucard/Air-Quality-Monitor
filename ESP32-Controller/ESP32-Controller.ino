@@ -6,12 +6,12 @@
 #include "Adafruit_BME680.h"
 #include "secrets.h"
 
+
+// BME680 pins
 #define BME_SCK 18
 #define BME_MISO 19
 #define BME_MOSI 23
 #define BME_CS 5
-
-#define SEALEVELPRESSURE_HPA (1013.25)
 
 #define CONNECTION_TIMEOUT 10
 
@@ -27,7 +27,7 @@ const float TemperatureWeight = 0.2;
 const float PressureWeight = 0.1;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   while (!Serial);
 
   // Connect to WiFi
@@ -65,9 +65,6 @@ void loop() {
     Serial.println("Failed to perform reading :(");
     return;
   }
-  Serial.print("Approx. Altitude = ");
-  Serial.print(bme.readAltitude(SEALEVELPRESSURE_HPA));
-  Serial.println(" m");
 
   Serial.print("Temperature = ");
   Serial.print(bme.temperature);
