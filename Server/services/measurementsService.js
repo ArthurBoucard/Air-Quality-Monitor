@@ -7,9 +7,9 @@ class MeasurementsService {
         try {
             const { time, temperature, pressure, gas, co2, humidity, iaq } = measurementData;
     
-            const query = `INSERT INTO measurements (time, temperature, pressure, gas, co2, humidity, iaq) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+            const query = `INSERT INTO measurements (time, temperature, pressure, gas, co2, humidity, iaq) VALUES (NOW(), ?, ?, ?, ?, ?, ?)`;
     
-            const values = [time, temperature, pressure, gas, co2, humidity, iaq];
+            const values = [temperature, pressure, gas, co2, humidity, iaq];
     
             await dbConnection.query(query, { replacements: values });
             return;

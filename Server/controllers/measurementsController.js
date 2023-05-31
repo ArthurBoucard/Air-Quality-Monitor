@@ -3,10 +3,9 @@ const measurementsService = require('../services/measurementsService');
 class MeasurementsController {
     async createMeasurement(req, res) {
         try {
-            const { time, temperature, pressure, gas, co2, humidity, iaq } = req.body;
+            const { temperature, pressure, gas, co2, humidity, iaq } = req.body;
         
             const measurementData = {
-                time,
                 temperature,
                 pressure,
                 gas,
