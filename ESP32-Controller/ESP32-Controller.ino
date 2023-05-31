@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include <WiFi.h>
 #include <SPI.h>
+#include <HTTPClient.h>
 #include <Adafruit_Sensor.h>
 #include "Adafruit_BME680.h"
 #include "secrets.h"
@@ -15,6 +16,9 @@
 #define CONNECTION_TIMEOUT 10
 
 Adafruit_BME680 bme(BME_CS, BME_MOSI, BME_MISO,  BME_SCK);
+
+// Server info
+const char* serverUrl = "http://192.168.1.104:3000/measurements/create";
 
 // Weight attribution
 const float HumidityWeight = 0.4;
@@ -93,6 +97,36 @@ void loop() {
 
   Serial.print("IAQ Score = ");
   Serial.println(iaqScore);
+
+  // Create the HTTP client object and set the target URL + content type
+  HTTPClient http;
+  http.begin(serverUrl);
+  http.addHeader("Content-Type", "application/json");
+
+  // Create the JSON payload
+  String payload = "{\"temperature\":" + String(bme.temperature) +
+                  ",\"pressure\":" + String(bme.pressure / 100.0) +
+                  ",\"humidity\":" + String(bme.humidity) +
+                  ",\"gas\":" + String(bme.gas_resistance * 0.001) +
+                  ",\"co2\": 0" +
+                  ",\"iaq\":" + String(iaqScore) +
+                  "}";
+
+  // Send the POST request with the payload
+  int httpResponseCode = http.POST(payload);
+
+  // Check the response code
+  if (httpResponseCode == 201) {
+    String response = http.getString();
+    Serial.println("HTTP POST request successful. Response:");
+    Serial.println(response);
+  } else {
+    Serial.print("Error: ");
+    Serial.println(httpResponseCode);
+  }
+
+  // Clean up
+  http.end();
 
   Serial.println();
   delay(2000);
