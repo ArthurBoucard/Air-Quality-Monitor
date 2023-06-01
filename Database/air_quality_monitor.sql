@@ -10,5 +10,5 @@ CREATE TABLE measurements (
   gas FLOAT,
   co2 FLOAT,
   humidity FLOAT,
-  air_quality_index FLOAT
+  iaq FLOAT
 );
