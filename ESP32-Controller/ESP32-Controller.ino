@@ -153,7 +153,7 @@ void loop() {
   }
   
   // Verify all values are collected
-  if (temperature != -1 || pressure != -1 || humidity != -1 || gas != -1 || co2 != -1) {
+  if (temperature != -1 && pressure != -1 && humidity != -1 && gas != -1 && co2 != -1) {
 
     // Calculate normalized values
     float normalizedHumidity = (humidity - 0) / (100 - 0);
