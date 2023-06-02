@@ -2,11 +2,13 @@
 #include <WiFi.h>
 #include <SPI.h>
 #include <HTTPClient.h>
+#include <esp_task_wdt.h>
 #include <Adafruit_Sensor.h>
 #include "Adafruit_BME680.h"
 #include "secrets.h"
 
 #define CONNECTION_TIMEOUT 10
+#define WATCHDOG_TIMEOUT_MS 90000
 
 // BME680 pins
 #define BME_SCK 18
@@ -62,6 +64,9 @@ void interrupt_change()
 void setup() {
   Serial.begin(115200);
   while (!Serial);
+  
+  // Initialize the watchdog timer
+  esp_task_wdt_init(WATCHDOG_TIMEOUT_MS, true);
 
   pinMode(SENSOR_DATA_PIN, INPUT);
   attachInterrupt(INTERRUPT_NUMBER, interrupt_change, CHANGE);
@@ -97,6 +102,9 @@ void setup() {
 }
 
 void loop() {
+  // Reset the watchdog timer
+  esp_task_wdt_reset();
+
   if (!bme.performReading()) {
     Serial.println("BME680 failed to perform reading :");
     return;
@@ -154,6 +162,9 @@ void loop() {
   
   // Verify all values are collected
   if (temperature != -1 && pressure != -1 && humidity != -1 && gas != -1 && co2 != -1) {
+
+    // Reset the watchdog timer
+    esp_task_wdt_reset();
 
     // Calculate normalized values
     float normalizedHumidity = (humidity - 0) / (100 - 0);
