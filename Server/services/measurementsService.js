@@ -32,9 +32,16 @@ class MeasurementsService {
 
     async getCo2Measurements() {
         try {
-            const query = `SELECT co2 FROM measurements`;
+            const query = `SELECT co2, time FROM measurements`;
 
-            const [measurements] = await dbConnection.query(query);
+            const [rows] = await dbConnection.query(query);
+
+            const measurements = rows.map(row => {
+                return {
+                    time: row.time,
+                    value: row.co2
+                };
+            });
 
             return measurements;
         } catch (error) {
@@ -44,9 +51,16 @@ class MeasurementsService {
 
     async getTemperatureMeasurements() {
         try {
-            const query = `SELECT temperature FROM measurements`;
+            const query = `SELECT temperature, time FROM measurements`;
 
-            const [measurements] = await dbConnection.query(query);
+            const [rows] = await dbConnection.query(query);
+
+            const measurements = rows.map(row => {
+                return {
+                    time: row.time,
+                    value: row.temperature
+                };
+            });
 
             return measurements;
         } catch (error) {
@@ -56,9 +70,16 @@ class MeasurementsService {
 
     async getHumidityMeasurements() {
         try {
-            const query = `SELECT humidity FROM measurements`;
+            const query = `SELECT humidity, time FROM measurements`;
 
-            const [measurements] = await dbConnection.query(query);
+            const [rows] = await dbConnection.query(query);
+
+            const measurements = rows.map(row => {
+                return {
+                    time: row.time,
+                    value: row.humidity
+                };
+            });
 
             return measurements;
         } catch (error) {
@@ -68,9 +89,16 @@ class MeasurementsService {
 
     async getPressureMeasurements() {
         try {
-            const query = `SELECT pressure FROM measurements`;
+            const query = `SELECT pressure, time FROM measurements`;
 
-            const [measurements] = await dbConnection.query(query);
+            const [rows] = await dbConnection.query(query);
+
+            const measurements = rows.map(row => {
+                return {
+                    time: row.time,
+                    value: row.pressure
+                };
+            });
 
             return measurements;
         } catch (error) {
@@ -80,9 +108,16 @@ class MeasurementsService {
 
     async getGasMeasurements() {
         try {
-            const query = `SELECT gas FROM measurements`;
+            const query = `SELECT gas, time FROM measurements`;
 
-            const [measurements] = await dbConnection.query(query);
+            const [rows] = await dbConnection.query(query);
+
+            const measurements = rows.map(row => {
+                return {
+                    time: row.time,
+                    value: row.gas
+                };
+            });
 
             return measurements;
         } catch (error) {
@@ -92,9 +127,16 @@ class MeasurementsService {
 
     async getIaqMeasurements() {
         try {
-            const query = `SELECT iaq FROM measurements`;
+            const query = `SELECT iaq, time FROM measurements`;
 
-            const [measurements] = await dbConnection.query(query);
+            const [rows] = await dbConnection.query(query);
+
+            const measurements = rows.map(row => {
+                return {
+                    time: row.time,
+                    value: row.iaq
+                };
+            });
 
             return measurements;
         } catch (error) {
