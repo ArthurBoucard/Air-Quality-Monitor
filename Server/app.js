@@ -1,6 +1,7 @@
 const express = require('express');
 const os = require('os');
 const measurementsRoutes = require('./routes/measurementsRoutes');
+const weatherRoutes = require('./routes/weatherRoutes');
 
 const app = express();
 
@@ -9,6 +10,7 @@ app.use(express.json());
 
 // Define your routes
 app.use('/measurements', measurementsRoutes);
+app.use('/weather', weatherRoutes);
 
 // Determine the IP address dynamically
 const interfaces = os.networkInterfaces();
