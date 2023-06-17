@@ -1,0 +1,17 @@
+{
+    "include": ["vite.config.*", "src/types/*.d.ts", "src/**/*", "src/**/*.vue", "src/sample_data/*.json"],
+    "exclude": ["src/**/__tests__/*"],
+    "compilerOptions": {
+      "module": "es2022",
+      "moduleResolution": "Node",
+      "allowSyntheticDefaultImports": true,
+      "resolveJsonModule": true,
+      "types": ["node", "web-bluetooth"], // https://github.com/vueuse/vueuse/issues/1709
+      "isolatedModules": false,
+      "composite": true,
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./src/*"]
+      }
+    }
+}
