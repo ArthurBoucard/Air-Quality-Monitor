@@ -5,7 +5,7 @@ export const useAirQualityStore = defineStore("airQuality", () => {
     const backendPath = import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
 
     async function getAirQuality(): Promise<QualityTimestamp[]> {
-        const path = `${backendPath}/measurements/get-all`;
+        const path = `${backendPath}/measurements/get/all`;
 
         const response = await fetch(path, {
             method: "GET",
