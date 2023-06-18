@@ -1,9 +1,13 @@
 const express = require('express');
 const os = require('os');
+const cors = require('cors');
 const measurementsRoutes = require('./routes/measurementsRoutes');
 const weatherRoutes = require('./routes/weatherRoutes');
 
 const app = express();
+
+// Enable CORS
+app.use(cors());
 
 // Middleware to parse request body
 app.use(express.json());
